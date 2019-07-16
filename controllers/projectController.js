@@ -9,9 +9,8 @@ exports.get = (req, res) => {
 exports.getProjectsByUser = (req, res) => {
 	const userId = req.params['userId'];
 	//TODO Put the logic on the mongoose query
-	Project.find({}, (err, projects) => {
-		const projectsOfUser =
-			projects.filter(project => project.participants.map(participant => participant._id).includes(userId));
-		res.status(HttpStatus.OK).json({ projectsOfUser });
-	}).populate({ path: 'participants', populate: { path: 'participants' }});
+	const allProjects = Project.find({}).populate({ path: 'participants', populate: { path: 'participants' }});
+	const projectsOfUser = allProjects &&
+		allProjects.filter(project => project.participants.map(participant => participant._id).includes(userId));
+	res.status(HttpStatus.OK).json({ projectsOfUser });
 };
