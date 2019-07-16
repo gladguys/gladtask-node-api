@@ -3,24 +3,30 @@ const HttpStatus = require('http-status-codes');
 
 const config = require('../config');
 const User = require('../models/user');
+const Team = require('../models/team');
 
-// eslint-disable-next-line no-unused-vars
-exports.get = (req, res, next) => {
+exports.get = (req, res) => {
 	User.find({}, (err, users) => res.status(HttpStatus.OK).json({ users }));
 };
 
-// eslint-disable-next-line no-unused-vars
-exports.post = (req, res, next) => {
-	const user = new User({
-		username: req.body.username,
-		password: req.body.password,
-		name: req.body.name
-	});
-	bcrypt.hash(req.body.password, config.bcrypt_saltRounds, (err, hash) => {
-		user.password = hash;
+exports.post = (req, res) => {
+	const user = new User(req.body.user);
+	const teamId = req.body.teamId;
 
-		user.save((err, userSaved) =>
-			res.status(HttpStatus.CREATED).send({ user: userSaved })
-		);
+	bcrypt.hash(req.body.user.password, config.bcrypt_saltRounds, (err, hash) => {
+		user.password = hash;
+		user.save((err, userSaved) => {
+			if (teamId) {
+				//TODO Implement this
+			} else {
+				const team = new Team({ teamId });
+				team.name = 'Meu time';
+				team.manager = userSaved;
+				team.participants = [userSaved];
+				// eslint-disable-next-line no-unused-vars
+				team.save((err, teamSaved) => {});
+			}
+			res.status(HttpStatus.CREATED).send({ user: userSaved });
+		});
 	});
 };
