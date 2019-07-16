@@ -11,6 +11,12 @@ exports.get = async (req, res) => {
 	res.status(HttpStatus.OK).json({ users });
 };
 
+exports.getUserById = async (req, res) => {
+	const userId = req.params['userId'];
+	const user = await User.findOne({ _id: userId });
+	res.status(user ? HttpStatus.OK : HttpStatus.NO_CONTENT).json({ user });
+};
+
 exports.getUserByUsername = async (req, res) => {
 	const username = req.params['username'];
 	const user = await User.findOne({ username });
