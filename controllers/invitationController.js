@@ -7,11 +7,10 @@ exports.get = async (req, res) => {
 	res.status(HttpStatus.OK).json({ invitations });
 };
 
-exports.getInvitationsByUser = (req, res) => {
+exports.getInvitationsByUser = async (req, res) => {
 	const userId = req.params['userId'];
 	//TODO Put the logic on the mongoose query
-	const allInvitations = Invitation.find({}).populate({ path: 'receiver', populate: { path: 'receiver' }});
-	const invitationsOfUser = allInvitations &&
-		allInvitations.filter(invitation => invitation.receiver._id === userId);
+	const allInvitations = await Invitation.find({}).populate({ path: 'receiver', populate: { path: 'receiver' }});
+	const invitationsOfUser = allInvitations.filter(invitation => invitation.receiver._id === userId);
 	res.status(HttpStatus.OK).json({ invitationsOfUser });
 };

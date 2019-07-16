@@ -17,9 +17,13 @@ exports.post = async (req, res) => {
 
 exports.getUserTeams = async (req, res) => {
 	const userId = req.params['userId'];
+
 	//TODO Put the logic on the mongoose query
-	const allTeams = Team.find({}).populate({ path: 'participants', populate: { path: 'participants' }});
-	const teamsOfUser = allTeams &&
+	const allTeams = await Team.find({})
+		.populate('manager')
+		.populate({ path: 'participants', populate: { path: 'participants' }});
+
+	const teamsOfUser =
 		allTeams.filter(team => team.participants.map(participant => participant._id).includes(userId));
-	res.status(HttpStatus.OK).json({ teamsOfUser });
+	res.status(HttpStatus.OK).json(teamsOfUser);
 };
