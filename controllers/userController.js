@@ -11,6 +11,18 @@ exports.get = async (req, res) => {
 	res.status(HttpStatus.OK).json({ users });
 };
 
+exports.getUserByUsername = async (req, res) => {
+	const username = req.params['username'];
+	const user = await User.findOne({ username });
+	res.status(user ? HttpStatus.OK : HttpStatus.NO_CONTENT).json({ user });
+};
+
+exports.getUserByEmail = async (req, res) => {
+	const email = req.params['email'];
+	const user = await User.findOne({ email });
+	res.status(user ? HttpStatus.OK : HttpStatus.NO_CONTENT).json({ user });
+};
+
 exports.post = async (req, res) => {
 	const user = new User(req.body.user);
 	user._id = mongoose.Types.ObjectId();
