@@ -5,8 +5,8 @@ const jwtHelper = require('../jwtHelper');
 const User = require('../models/user');
 
 exports.post = async (req, res) => {
-	const usernameOrEmail = req.body.usernameOrEmail;
-	const password = req.body.password;
+	const usernameOrEmail = req.body['usernameOrEmail'];
+	const password = req.body['password'];
 
 	const userFound = await User.findOne({$or: [{ email: usernameOrEmail }, { username: usernameOrEmail }]});
 	if (userFound) {
