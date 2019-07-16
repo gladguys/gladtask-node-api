@@ -5,10 +5,10 @@ const jwtHelper = require('../jwtHelper');
 const User = require('../models/user');
 
 exports.post = (req, res) => {
-	const username = req.body.username;
+	const email = req.body.email;
 	const password = req.body.password;
 
-	User.findOne({ username: username }, (err, userFound) => {
+	User.findOne({ email }, (err, userFound) => {
 		if (userFound) {
 			bcrypt.compare(password, userFound.password, (err, matchedPassword) => {
 				if (matchedPassword) {
