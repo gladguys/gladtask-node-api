@@ -8,25 +8,25 @@ const Team = require('../models/team');
 
 exports.get = async (req, res) => {
 	const users = await User.find({});
-	res.status(HttpStatus.OK).json({ users });
+	res.status(HttpStatus.OK).json(users);
 };
 
 exports.getUserById = async (req, res) => {
 	const userId = req.params['userId'];
 	const user = await User.findOne({ _id: userId });
-	res.status(user ? HttpStatus.OK : HttpStatus.NO_CONTENT).json({ user });
+	res.status(user ? HttpStatus.OK : HttpStatus.NO_CONTENT).json(user);
 };
 
 exports.getUserByUsername = async (req, res) => {
 	const username = req.params['username'];
 	const user = await User.findOne({ username });
-	res.status(user ? HttpStatus.OK : HttpStatus.NO_CONTENT).json({ user });
+	res.status(user ? HttpStatus.OK : HttpStatus.NO_CONTENT).json(user);
 };
 
 exports.getUserByEmail = async (req, res) => {
 	const email = req.params['email'];
 	const user = await User.findOne({ email });
-	res.status(user ? HttpStatus.OK : HttpStatus.NO_CONTENT).json({ user });
+	res.status(user ? HttpStatus.OK : HttpStatus.NO_CONTENT).json(user);
 };
 
 exports.post = async (req, res) => {

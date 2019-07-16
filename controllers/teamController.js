@@ -6,7 +6,15 @@ exports.get = async (req, res) => {
 	const teams = Team.find({})
 		.populate('manager')
 		.populate({ path: 'participants', populate: { path: 'participants' }});
-	res.status(HttpStatus.OK).json({ teams });
+	res.status(HttpStatus.OK).json(teams);
+};
+
+exports.getTeamById = async (req, res) => {
+	const teamId = req.params['teamId'];
+	const team = await Team.findOne({ _id: teamId })
+		.populate('manager')
+		.populate({ path: 'participants', populate: { path: 'participants' }});
+	res.status(team ? HttpStatus.OK : HttpStatus.NO_CONTENT).json(team);
 };
 
 exports.post = async (req, res) => {

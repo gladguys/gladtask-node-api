@@ -3,7 +3,7 @@ const HttpStatus = require('http-status-codes');
 const Project = require('../models/project');
 
 exports.get = (req, res) => {
-	Project.find({}, (err, projects) => res.status(HttpStatus.OK).json({ projects }));
+	Project.find({}, (err, projects) => res.status(HttpStatus.OK).json(projects));
 };
 
 exports.getProjectsByUser = async (req, res) => {
@@ -12,5 +12,5 @@ exports.getProjectsByUser = async (req, res) => {
 	const allProjects = await Project.find({}).populate({ path: 'participants', populate: { path: 'participants' }});
 	const projectsOfUser =
 		allProjects.filter(project => project.participants.map(participant => participant._id).includes(userId));
-	res.status(HttpStatus.OK).json({ projectsOfUser });
+	res.status(HttpStatus.OK).json(projectsOfUser);
 };
