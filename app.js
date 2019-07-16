@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const HeadersMiddleware = require('./middlewares/headersMiddleware');
-const DefaultErrorHandlerMiddleware = require('./middlewares/defaultErrorHandlerMiddleware');
+//const DefaultErrorHandlerMiddleware = require('./middlewares/defaultErrorHandlerMiddleware');
 const config = require('./config');
 
 const app = express();
@@ -23,6 +23,6 @@ app.use('/api/team', require('./routes/teamRoutes'));
 app.use('/api/project', require('./routes/projectRoutes'));
 app.use('/api/invitation', require('./routes/invitationRoutes'));
 
-app.use(DefaultErrorHandlerMiddleware);
+//app.use(DefaultErrorHandlerMiddleware);
 
 module.exports = app;
