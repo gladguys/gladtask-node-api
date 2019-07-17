@@ -30,21 +30,23 @@ exports.getUserByEmail = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
-	const user = new User(req.body.user);
+	const userFromRequest = req.body['user'];
+	const user = new User(userFromRequest);
 	user._id = mongoose.Types.ObjectId();
-	const teamId = req.body.teamId;
+	const teamId = req.body['teamId'];
 
-	bcrypt.hash(req.body.user.password, config.bcrypt_saltRounds, async (err, hash) => {
+	bcrypt.hash(userFromRequest['password'], config.bcrypt_saltRounds, async (err, hash) => {
 		user.password = hash;
 		const savedUser = await user.save();
 		if (teamId) {
-			//TODO Implement this
+			const existingTeam = await Team.findById(teamId);
+			existingTeam.participants.push(savedUser._id);
+			await existingTeam.findOneAndUpdate({ _id: teamId }, { $set:{ participants: existingTeam.participants } } );
 		} else {
 			const team = new Team({ teamId });
 			team.name = 'Meu time';
-			team.manager = savedUser;
-			team.participants = [savedUser];
-			// eslint-disable-next-line no-unused-vars
+			team.manager = savedUser._id;
+			team.participants = [savedUser._id];
 			await team.save();
 		}
 		res.status(HttpStatus.CREATED).send({ user: savedUser });
