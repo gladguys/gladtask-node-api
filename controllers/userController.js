@@ -13,7 +13,7 @@ exports.get = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
 	const userId = req.params['userId'];
-	const user = await User.findOne({ _id: userId });
+	const user = await User.findById(userId);
 	res.status(user ? HttpStatus.OK : HttpStatus.NOT_FOUND).json(user);
 };
 
