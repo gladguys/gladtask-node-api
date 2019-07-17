@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const mongoose = require('mongoose');
 const cors = require('cors');
 
+const HeadersMiddleware = require('./middlewares/headersMiddleware');
+//const DefaultErrorHandlerMiddleware = require('./middlewares/defaultErrorHandlerMiddleware');
 const config = require('./config');
 
 const app = express();
@@ -12,20 +15,14 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use((req, res, next) => {
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.setHeader(
-		'Access-Control-Allow-Headers',
-		'Origin, X-Requested-With, Content-Type, Accept, Authorization, x-access-token'
-	);
-	res.setHeader(
-		'Access-Control-Allow-Methods',
-		'GET, POST, PATCH, PUT, DELETE, OPTIONS'
-	);
-	next();
-});
+app.use(HeadersMiddleware);
 
 app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/user', require('./routes/userRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/teams', require('./routes/teamRoutes'));
+app.use('/api/projects', require('./routes/projectRoutes'));
+app.use('/api/invitations', require('./routes/invitationRoutes'));
+
+//app.use(DefaultErrorHandlerMiddleware);
 
 module.exports = app;
