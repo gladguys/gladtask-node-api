@@ -9,7 +9,7 @@ exports.get = async (req, res) => {
 
 exports.getTeamById = async (req, res) => {
 	const teamId = req.params['teamId'];
-	const team = await Team.findOne({ _id: teamId });
+	const team = await Team.findById(teamId);
 	res.status(team ? HttpStatus.OK : HttpStatus.NOT_FOUND).json(team);
 };
 
@@ -21,10 +21,6 @@ exports.post = async (req, res) => {
 
 exports.getUserTeams = async (req, res) => {
 	const userId = req.params['userId'];
-
-	//TODO Put the logic on the mongoose query
-	const allTeams = await Team.find({});
-	const teamsOfUser =
-		allTeams.filter(team => team.participants.map(participant => participant._id).includes(userId));
+	const teamsOfUser = await Team.find({ participants: userId });
 	res.status(HttpStatus.OK).json(teamsOfUser);
 };
