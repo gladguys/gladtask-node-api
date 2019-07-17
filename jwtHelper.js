@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('./config.js');
 
-let checkToken = (req, res, next) => {
+const checkToken = (req, res, next) => {
 	let token = req.headers['x-access-token'] || req.headers['authorization'];
 	if (token) {
 		jwt.verify(token, config.jwt_secret, (err, decoded) => {
@@ -23,14 +23,21 @@ let checkToken = (req, res, next) => {
 	}
 };
 
-let createToken = (username) => {
-	return jwt.sign({username: username},
+const createToken = (id, username) => {
+	return jwt.sign(
+		{id, username},
 		config.jwt_secret,
 		{expiresIn: config.jwt_expiresIn}
 	);
 };
 
+const getUserIdFromToken = (token) => {
+	const decoded = jwt.verify(token, config.jwt_secret);
+	return decoded.id;
+};
+
 module.exports = {
 	checkToken: checkToken,
-	createToken: createToken
+	createToken: createToken,
+	getUserIdFromToken: getUserIdFromToken
 };
