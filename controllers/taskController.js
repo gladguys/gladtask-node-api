@@ -10,6 +10,18 @@ exports.getTaskById = async (req, res) => {
 	res.status(HttpStatus.OK).json(taskFound);
 };
 
+exports.getTasksByUser = async (req, res) => {
+	const userId = req.params['userId'];
+	const tasksFound = await Task.find({ targetUser: userId });
+	res.status(HttpStatus.OK).json(tasksFound);
+};
+
+exports.getTasksByProject = async (req, res) => {
+	const projectId = req.params['projectId'];
+	const tasksFound = await Task.find({ project: projectId });
+	res.status(HttpStatus.OK).json(tasksFound);
+};
+
 exports.getUserTasksDueWithinDays = async (req, res) => {
 	const days = req.params['days'];
 	const userId = req.params['userId'];

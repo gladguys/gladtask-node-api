@@ -3,8 +3,15 @@ const HttpStatus = require('http-status-codes');
 const jwtHelper = require('../jwtHelper');
 const Project = require('../models/project');
 
-exports.get = (req, res) => {
-	Project.find({}, (err, projects) => res.status(HttpStatus.OK).json(projects));
+exports.getById = async (req, res) => {
+	const projectId = req.params['projectId'];
+	const project = await Project.findById(projectId);
+
+	if (project) {
+		res.status(HttpStatus.OK).json(project);
+	} else {
+		res.status(HttpStatus.NOT_FOUND);
+	}
 };
 
 exports.getProjectsByUser = async (req, res) => {
