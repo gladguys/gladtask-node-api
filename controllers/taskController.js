@@ -2,6 +2,7 @@ const HttpStatus = require('http-status-codes');
 const moment = require('moment');
 
 const Task = require('../models/task');
+const TaskComment = require('../models/taskComment');
 
 exports.getTaskById = async (req, res) => {
 	const taskId = req.params['taskId'];
@@ -42,6 +43,23 @@ exports.post = async (req, res) => {
 	const task = new Task(req.body);
 	const taskSaved = await task.save();
 	res.status(HttpStatus.CREATED).send({ task: taskSaved });
+};
+
+//TODO implementation not tested yet
+exports.saveTaskComment = async (req, res) => {
+	const taskId = req.params['taskId'];
+	const taskComment = new TaskComment(req.body);
+	const task = await Task.findById(taskId);
+
+	if (task) {
+		const comments = task.taskComments;
+		comments.push(taskComment);
+		const updatedTask = Task.update( {_id: taskId}, { $set: { taskComments : comments} } );
+		res.status(HttpStatus.CREATED).send(updatedTask);
+	} else {
+		res.status(HttpStatus.NOT_FOUND);
+	}
+
 };
 
 //TODO implementation not tested yet

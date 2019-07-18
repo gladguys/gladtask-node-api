@@ -9,6 +9,7 @@ router.get('/similar/title/:title', checkToken, TaskController.getSimilarTasksBy
 router.get('/last-edited/:userId', checkToken, TaskController.getLast4UserEditedTasks);
 
 router.post('/', checkToken, TaskController.post);
+router.post('/:taskId/save-comment', checkToken, TaskController.saveTaskComment);
 
 router.put('/:taskId/update-status/:newStatus', checkToken, TaskController.updateTaskStatus);
 
