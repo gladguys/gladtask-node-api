@@ -7,4 +7,6 @@ router.get('/:taskId', checkToken, TaskController.getTaskById);
 router.get('/between/:days/:userId', checkToken, TaskController.getUserTasksDueWithinDays);
 router.get('/last-edited/:userId', checkToken, TaskController.getLast4UserEditedTasks);
 
+router.post('/', checkToken, TaskController.post);
+
 module.exports = router;

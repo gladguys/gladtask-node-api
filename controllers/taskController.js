@@ -5,9 +5,7 @@ const Task = require('../models/task');
 
 exports.getTaskById = async (req, res) => {
 	const taskId = req.params['taskId'];
-
 	const taskFound = await Task.findOne({ _id: taskId });
-	console.log(taskFound);
 	res.status(HttpStatus.OK).json(taskFound);
 };
 
@@ -33,4 +31,10 @@ exports.getLast4UserEditedTasks = async (req, res) => {
 		.sort({ 'lastEdited': -1 })
 		.limit(4);
 	res.status(HttpStatus.OK).json(tasksFound);
+};
+
+exports.post = async (req, res) => {
+	const task = new Task(req.body);
+	const taskSaved = await task.save();
+	res.status(HttpStatus.CREATED).send({ task: taskSaved });
 };

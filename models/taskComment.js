@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
+const User = require('./user');
+
 const taskCommentSchema = mongoose.Schema({
 	_id: { type: ObjectId, auto: true },
-	user: { type: ObjectId, ref: 'User', autopopulate: true },
+	user: { type: ObjectId, ref: User, autopopulate: true },
 	date: { type: Date },
 	text: { type: String }
 });
