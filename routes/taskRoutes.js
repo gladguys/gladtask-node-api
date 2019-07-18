@@ -5,8 +5,11 @@ const TaskController = require('../controllers/taskController');
 
 router.get('/:taskId', checkToken, TaskController.getTaskById);
 router.get('/between/:days/:userId', checkToken, TaskController.getUserTasksDueWithinDays);
+router.get('/similar/title/:title', checkToken, TaskController.getSimilarTasksByTitle);
 router.get('/last-edited/:userId', checkToken, TaskController.getLast4UserEditedTasks);
 
 router.post('/', checkToken, TaskController.post);
+
+router.put('/:taskId/update-status/:newStatus', checkToken, TaskController.updateTaskStatus);
 
 module.exports = router;
