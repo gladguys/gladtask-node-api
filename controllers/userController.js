@@ -17,6 +17,12 @@ exports.getUserById = async (req, res) => {
 	res.status(user ? HttpStatus.OK : HttpStatus.NOT_FOUND).json(user);
 };
 
+exports.getUsersByTeam = async (req, res) => {
+	const teamId = req.params['teamId'];
+	const team = await Team.findById(teamId);
+	res.status(team.participants ? HttpStatus.OK : HttpStatus.NOT_FOUND).json(team.participants);
+};
+
 exports.getUserByUsername = async (req, res) => {
 	const username = req.params['username'];
 	const user = await User.findOne({ username });

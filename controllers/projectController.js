@@ -13,6 +13,12 @@ exports.getProjectsByUser = async (req, res) => {
 	res.status(HttpStatus.OK).json(userProjects);
 };
 
+exports.getProjectsByTeam = async (req, res) => {
+	const teamId = req.params['teamId'];
+	const teamProjects = await Project.find({ team: teamId });
+	res.status(HttpStatus.OK).json(teamProjects);
+};
+
 exports.post = async (req, res) => {
 	const creatorUserId = jwtHelper.getUserIdFromToken(req.headers['authorization']);
 	const project = new Project(req.body);

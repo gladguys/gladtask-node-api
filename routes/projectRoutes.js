@@ -5,6 +5,7 @@ const ProjectController = require('../controllers/projectController');
 
 router.get('/', checkToken, ProjectController.get);
 router.get('/user/:userId', checkToken, ProjectController.getProjectsByUser);
+router.get('/team/:teamId', checkToken, ProjectController.getProjectsByTeam);
 
 router.post('/', checkToken, ProjectController.post);
 
