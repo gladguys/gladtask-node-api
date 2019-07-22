@@ -1,6 +1,7 @@
 const HttpStatus = require('http-status-codes');
 const moment = require('moment');
 
+const jwtHelper = require('../jwtHelper');
 const Task = require('../models/task');
 const TaskComment = require('../models/taskComment');
 
@@ -52,7 +53,9 @@ exports.getSimilarTasksByTitle = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
+	const creatorUserId = jwtHelper.getUserIdFromToken(req.headers['authorization']);
 	const task = new Task(req.body);
+	task.creatorUser = creatorUserId;
 	const taskSaved = await task.save();
 	res.status(HttpStatus.CREATED).send({ task: taskSaved });
 };
