@@ -1,12 +1,18 @@
 const HttpStatus = require('http-status-codes');
 const moment = require('moment');
 
+const jwtHelper = require('../jwtHelper');
 const Task = require('../models/task');
 const TaskComment = require('../models/taskComment');
+const TimeSpent = require('../models/timeSpent');
+const TaskChange = require('../models/taskChange');
 
 exports.getTaskById = async (req, res) => {
 	const taskId = req.params['taskId'];
 	const taskFound = await Task.findById(taskId);
+	taskFound.taskComments = await TaskComment.find({ taskId: taskId });
+	taskFound.timeSpentValues = await TimeSpent.find({ taskId: taskId });
+	taskFound.taskChanges = await TaskChange.find({ taskId: taskId });
 	res.status(HttpStatus.OK).json(taskFound);
 };
 
@@ -52,32 +58,22 @@ exports.getSimilarTasksByTitle = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
+	const creatorUserId = jwtHelper.getUserIdFromToken(req.headers['authorization']);
 	const task = new Task(req.body);
+	task.creatorUser = creatorUserId;
 	const taskSaved = await task.save();
 	res.status(HttpStatus.CREATED).send({ task: taskSaved });
 };
 
-//TODO implementation not tested yet
-exports.saveTaskComment = async (req, res) => {
-	const taskId = req.params['taskId'];
-	const taskComment = new TaskComment(req.body);
-	const task = await Task.findById(taskId);
-
-	if (task) {
-		const comments = task.taskComments;
-		comments.push(taskComment);
-		const updatedTask = Task.update( {_id: taskId}, { $set: { taskComments : comments} } );
-		res.status(HttpStatus.CREATED).send(updatedTask);
-	} else {
-		res.status(HttpStatus.NOT_FOUND);
-	}
-
+exports.put = async (req, res) => {
+	const task = new Task(req.body);
+	await Task.replaceOne({ _id: task._id }, task, { upsert: true });
+	res.status(HttpStatus.OK).send({ task: task });
 };
 
-//TODO implementation not tested yet
 exports.updateTaskStatus = async (req, res) => {
 	const taskId = req.params['taskId'];
 	const newStatus = req.params['newStatus'];
-	const taskUpdated = await Task.findOneAndUpdate({ _id: taskId }, { $set:{ status: newStatus } } );
-	res.status(HttpStatus.OK).send(taskUpdated);
+	const savedTask = await Task.updateOne({ _id: taskId }, { $set:{ status: newStatus, lastEdited: new Date() } } );
+	res.status(HttpStatus.OK).send(savedTask);
 };
