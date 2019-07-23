@@ -4,6 +4,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const timeSpentSchema = mongoose.Schema({
 	_id: { type: ObjectId, auto: true },
+	taskId: { type: ObjectId },
 	gladname: { type: String },
 	minutesSpent: { type: Number },
 	date: { type: Date }

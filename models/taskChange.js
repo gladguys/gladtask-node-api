@@ -4,6 +4,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const taskChangeSchema = mongoose.Schema({
 	_id: { type: ObjectId, auto: true },
+	taskId: { type: ObjectId, unique: false },
 	userFirstName: { type: String },
 	date: { type: Date },
 	whatHasChanged: { type: String },
