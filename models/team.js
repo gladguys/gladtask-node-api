@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
+
+import { User } from './user';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
-
-const User = require('./user');
 
 const teamSchema = mongoose.Schema({
 	_id: { type: ObjectId, auto: true },
@@ -12,4 +12,4 @@ const teamSchema = mongoose.Schema({
 });
 teamSchema.plugin(require('mongoose-autopopulate'));
 
-module.exports = mongoose.model('Team', teamSchema);
+export const Team = mongoose.model('Team', teamSchema);

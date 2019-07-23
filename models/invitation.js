@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
+
+import { User } from './user';
+import { Team } from './team';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
-
-const User = require('./user');
-const Team = require('./team');
 
 const invitationSchema = mongoose.Schema({
 	_id: { type: ObjectId, auto: true },
@@ -14,4 +14,4 @@ const invitationSchema = mongoose.Schema({
 });
 invitationSchema.plugin(require('mongoose-autopopulate'));
 
-module.exports = mongoose.model('Invitation', invitationSchema);
+export const Invitation = mongoose.model('Invitation', invitationSchema);

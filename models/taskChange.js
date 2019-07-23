@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -13,4 +13,4 @@ const taskChangeSchema = mongoose.Schema({
 });
 taskChangeSchema.plugin(require('mongoose-autopopulate'));
 
-module.exports = mongoose.model('TaskChange', taskChangeSchema);
+export const TaskChange = mongoose.model('TaskChange', taskChangeSchema);

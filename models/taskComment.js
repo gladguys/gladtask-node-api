@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
+
+import { User } from './user';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
-
-const User = require('./user');
 
 const taskCommentSchema = mongoose.Schema({
 	_id: { type: ObjectId, auto: true },
@@ -13,4 +13,4 @@ const taskCommentSchema = mongoose.Schema({
 });
 taskCommentSchema.plugin(require('mongoose-autopopulate'));
 
-module.exports = mongoose.model('TaskComment', taskCommentSchema);
+export const TaskComment = mongoose.model('TaskComment', taskCommentSchema);

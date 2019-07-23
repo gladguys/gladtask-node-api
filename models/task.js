@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
+
+import { User } from './user';
+import { TaskChange } from './taskChange';
+import { TaskComment } from './taskComment';
+import { TimeSpent } from './timeSpent';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
-
-const User = require('./user');
-const TaskChange = require('./taskChange');
-const TaskComment = require('./taskComment');
-const TimeSpent = require('./timeSpent');
 
 const taskSchema = mongoose.Schema({
 	_id: { type: ObjectId, auto: true },
@@ -41,4 +41,4 @@ const taskSchema = mongoose.Schema({
 });
 taskSchema.plugin(require('mongoose-autopopulate'));
 
-module.exports = mongoose.model('Task', taskSchema);
+export const Task = mongoose.model('Task', taskSchema);
