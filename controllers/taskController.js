@@ -43,17 +43,26 @@ exports.getUserTasksDueWithinDays = async (req, res) => {
 	res.status(HttpStatus.OK).json(tasksFound);
 };
 
+exports.getSimilarTasksByTitle = async (req, res) => {
+	const title = req.params['title'];
+	const tasksFound = await Task.find( { title : { $regex : title, $options : 'i' } } );
+	res.status(HttpStatus.OK).json(tasksFound);
+};
+
+exports.getTasksByTitleOrDescription = async (req, res) => {
+	const term = req.params['term'];
+	const tasksFound = await Task.find( { $or: [
+		{ title: { $regex : term, $options : 'i' } },
+		{ description: { $regex : term, $options : 'i' } }
+	] } );
+	res.status(tasksFound ? HttpStatus.OK : HttpStatus.NO_CONTENT).json(tasksFound);
+};
+
 exports.getLast4UserEditedTasks = async (req, res) => {
 	const userId = req.params['userId'];
 	const tasksFound = await Task.find({ targetUser: userId })
 		.sort({ 'lastEdited': -1 })
 		.limit(4);
-	res.status(HttpStatus.OK).json(tasksFound);
-};
-
-exports.getSimilarTasksByTitle = async (req, res) => {
-	const title = req.params['title'];
-	const tasksFound = await Task.find( { title : { $regex : title, $options : 'i' } } );
 	res.status(HttpStatus.OK).json(tasksFound);
 };
 

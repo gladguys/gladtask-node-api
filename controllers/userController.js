@@ -35,6 +35,15 @@ exports.getUserByEmail = async (req, res) => {
 	res.status(user ? HttpStatus.OK : HttpStatus.NOT_FOUND).json(user);
 };
 
+exports.getUsersByFirstOrLastName = async (req, res) => {
+	const term = req.params['term'];
+	const usersFound = await User.find( { $or: [
+		{ firstName: { $regex : term, $options : 'i' } },
+		{ lastName: { $regex : term, $options : 'i' } }
+	] } );
+	res.status(usersFound ? HttpStatus.OK : HttpStatus.NO_CONTENT).json(usersFound);
+};
+
 exports.post = async (req, res) => {
 	const userFromRequest = req.body['user'];
 	const user = new User(userFromRequest);

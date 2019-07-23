@@ -26,6 +26,12 @@ exports.getProjectsByTeam = async (req, res) => {
 	res.status(HttpStatus.OK).json(teamProjects);
 };
 
+exports.getProjectsByName = async (req, res) => {
+	const term = req.params['term'];
+	const projectsFound = await Project.find( { name : { $regex : term, $options : 'i' } } );
+	res.status(projectsFound ? HttpStatus.OK : HttpStatus.NO_CONTENT).json(projectsFound);
+};
+
 exports.post = async (req, res) => {
 	const creatorUserId = jwtHelper.getUserIdFromToken(req.headers['authorization']);
 	const project = new Project(req.body);
