@@ -12,7 +12,7 @@ const taskSchema = mongoose.Schema({
 	title: { type: String },
 	status: {
 		type: String,
-		enum : ['CRIADA', 'EM_ESPERA', 'EM_ANDAMENTO', 'CONCLUIDA'],
+		enum : ['CRIADA', 'EM ESPERA', 'EM_ANDAMENTO', 'CONCLUIDA'],
 		default: 'CRIADA'
 	},
 	project: { type: ObjectId, ref: 'Project', autopopulate: true },
@@ -35,9 +35,9 @@ const taskSchema = mongoose.Schema({
 		default: 'Outro'
 	},
 	estimatedTime: { type: String },
-	taskChanges: [{ type: ObjectId, ref: TaskChange, autopopulate: true }],
-	taskComments: [{ type: ObjectId, ref: TaskComment, autopopulate: true }],
-	timeSpentValues: [{ type: ObjectId, ref: TimeSpent, autopopulate: true }]
+	taskChanges: [{ type: TaskChange.schema }],
+	taskComments: [{ type: TaskComment.schema }],
+	timeSpentValues: [{ type: TimeSpent.schema }]
 });
 taskSchema.plugin(require('mongoose-autopopulate'));
 
