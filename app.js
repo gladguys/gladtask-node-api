@@ -12,7 +12,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const router = require('./routes/rootRouter')();
 
 //const DefaultErrorHandlerMiddleware = require('./middlewares/defaultErrorHandlerMiddleware');
 
@@ -25,7 +24,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(headerMiddleware);
 
-express().use('/api', router);
+app.use('/api/auth', authRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/teams', teamRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/invitations', invitationRoutes);
 
 //app.use(DefaultErrorHandlerMiddleware);
 

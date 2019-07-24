@@ -1,10 +1,11 @@
-import * as moment from "moment";
 import { OK, NO_CONTENT } from "http-status-codes";
 
 import { Task } from "../../models/task";
 import { TaskComment } from "../../models/taskComment";
 import { TimeSpent } from "../../models/timeSpent";
 import { TaskChange } from "../../models/taskChange";
+
+const moment = require('moment');
 
 export const getTaskById = async (req, res) => {
   const taskId = req.params['taskId'];
