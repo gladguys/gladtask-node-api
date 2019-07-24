@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -11,4 +11,4 @@ const timeSpentSchema = mongoose.Schema({
 });
 timeSpentSchema.plugin(require('mongoose-autopopulate'));
 
-module.exports = mongoose.model('TimeSpent', timeSpentSchema);
+export const TimeSpent = mongoose.model('TimeSpent', timeSpentSchema);

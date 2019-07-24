@@ -1,25 +1,28 @@
-let router = require('express').Router();
+import express from 'express';
 
-const checkToken = require('../jwtHelper').checkToken;
-const TaskController = require('../controllers/taskController');
-const TaskCommentController = require('../controllers/taskCommentController');
-const TimeSpentController = require('../controllers/timeSpentController');
-const TaskChangeController = require('../controllers/taskChangeController');
+import { checkToken } from "../jwtHelper";
 
-router.get('/:taskId', checkToken, TaskController.getTaskById);
-router.get('/user-target/:userId', checkToken, TaskController.getTasksByUser);
-router.get('/project/:projectId', checkToken, TaskController.getTasksByProject);
-router.get('/between/:days/:userId', checkToken, TaskController.getUserTasksDueWithinDays);
-router.get('/similar/title/:title', checkToken, TaskController.getSimilarTasksByTitle);
-router.get('/term/:term', checkToken, TaskController.getTasksByTitleOrDescription);
-router.get('/last-edited/:userId', checkToken, TaskController.getLast4UserEditedTasks);
+import * as TaskController from '../controllers/task';
+import * as TaskCommentController from '../controllers/taskComment';
+import * as TimeSpentController from '../controllers/timeSpent';
+import * as TaskChangeController from '../controllers/taskChange';
 
-router.post('/', checkToken, TaskController.post);
-router.post('/:taskId/save-comment', checkToken, TaskCommentController.saveTaskComment);
-router.post('/:taskId/save-time-spent', checkToken, TimeSpentController.saveTimeSpent);
-router.post('/:taskId/save-task-change', checkToken, TaskChangeController.saveTaskChange);
+const taskRoutes = express.Router();
 
-router.put('/', checkToken, TaskController.put);
-router.put('/:taskId/update-status/:newStatus', checkToken, TaskController.updateTaskStatus);
+taskRoutes.get('/:taskId', checkToken, TaskController.GET.getTaskById);
+taskRoutes.get('/user-target/:userId', checkToken, TaskController.GET.getTasksByUser);
+taskRoutes.get('/project/:projectId', checkToken, TaskController.GET.getTasksByProject);
+taskRoutes.get('/between/:days/:userId', checkToken, TaskController.GET.getUserTasksDueWithinDays);
+taskRoutes.get('/similar/title/:title', checkToken, TaskController.GET.getSimilarTasksByTitle);
+taskRoutes.get('/term/:term', checkToken, TaskController.GET.getTasksByTitleOrDescription);
+taskRoutes.get('/last-edited/:userId', checkToken, TaskController.GET.getLast4UserEditedTasks);
 
-module.exports = router;
+taskRoutes.post('/', checkToken, TaskController.POST.post);
+taskRoutes.post('/:taskId/save-comment', checkToken, TaskCommentController.POST.saveTaskComment);
+taskRoutes.post('/:taskId/save-time-spent', checkToken, TimeSpentController.POST.saveTimeSpent);
+taskRoutes.post('/:taskId/save-task-change', checkToken, TaskChangeController.POST.saveTaskChange);
+
+taskRoutes.put('/', checkToken, TaskController.PUT.put);
+taskRoutes.put('/:taskId/update-status/:newStatus', checkToken, TaskController.PUT.updateTaskStatus);
+
+export default taskRoutes;

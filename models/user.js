@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -14,4 +14,4 @@ const userSchema = mongoose.Schema({
 	creationDate: { type: Date, default: new Date() }
 });
 
-module.exports = mongoose.model('User', userSchema);
+export const User = mongoose.model('User', userSchema);
