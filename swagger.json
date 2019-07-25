@@ -1,0 +1,490 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Gladtask API",
+    "description": "API to serve the gladtask app"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Gladtask API",
+      "description": "API to serve the gladtask app"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Authenticate a user. Validates login and password and send back a token",
+        "parameters": [
+          {
+            "name": "User Info",
+            "in": "body",
+            "description": "User that we want to authenticate",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "usernameOrEmail": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "User is authenticated",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "authenticated": {
+                  "type": "boolean",
+                  "default": true
+                },
+                "user": {
+                  "type": "object",
+                  "$ref": "#/definitions/User"
+                },
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Cannot authenticated the user",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "authenticated": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get all users in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "ID of user that we want to find",
+          "type": "string"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user with given ID",
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user with given ID",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "User is deleted",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user with give ID",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User with new values of properties",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User is updated",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Task": {
+      "required": [
+        "_id",
+        "title",
+        "status",
+        "project",
+        "priority",
+        "creatorUser",
+        "targetUser",
+        "description",
+        "taskType"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "title": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["CRIADA", "EM ESPERA", "EM_ANDAMENTO", "CONCLUIDA"]
+        },
+        "project": {
+          "type": "object",
+          "$ref": "#/definitions/Project"
+        },
+        "team": {
+          "type": "object",
+          "$ref": "#/definitions/Team"
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["Baixa", "Normal", "Alta"]
+        },
+        "image": {
+          "type": "string"
+        },
+        "dueDate": {
+          "type": "string"
+        },
+        "lastEdited": {
+          "type": "string",
+          "default": "new Date()"
+        },
+        "creatorUser": {
+          "type": "object",
+          "$ref": "#/definitions/User"
+        },
+        "targetUser": {
+          "type": "object",
+          "$ref": "#/definitions/User"
+        },
+        "senderUser": {
+          "type": "object",
+          "$ref": "#/definitions/User"
+        },
+        "creationDate": {
+          "type": "string",
+          "default": "new Date()"
+        },
+        "description": {
+          "type": "string"
+        },
+        "taskType": {
+          "type": "string",
+          "enum": ["Documentação", "Feature", "Bug", "Melhoria", "Teste", "Alinhamento", "Reunião", "Outro"]
+        },
+        "estimatedTime": {
+          "type": "string"
+        },
+        "taskChanges": {
+          "type": "array",
+          "$ref": "#/definitions/TaskChange"
+        },
+        "taskComments": {
+          "type": "array",
+          "$ref": "#/definitions/TaskComment"
+        },
+        "timeSpentValues": {
+          "type": "array",
+          "$ref": "#/definitions/TimeSpent"
+        }
+      }
+    },
+    "Invitation": {
+      "required": [
+        "_id",
+        "author",
+        "receiver",
+        "team"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "author": {
+          "$ref": "#/definitions/User"
+        },
+        "receiver": {
+          "$ref": "#/definitions/User"
+        },
+        "team": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Project": {
+      "required": [
+        "_id",
+        "name",
+        "description",
+        "manager",
+        "team",
+        "participants"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "manager": {
+          "$ref": "#/definitions/User"
+        },
+        "team": {
+          "type": "string"
+        },
+        "participants": {
+          "type": "array",
+          "$ref": "#/definitions/User"
+        },
+        "projectImage": {
+          "type": "string"
+        }
+      }
+    },
+    "TaskChange": {
+      "required": [
+        "_id",
+        "taskId",
+        "userFirstName",
+        "date",
+        "whatHasChanged",
+        "oldValue",
+        "newValue"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "taskId": {
+          "type": "string"
+        },
+        "userFirstName": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "whatHasChanged": {
+          "type": "string"
+        },
+        "oldValue": {
+          "type": "string"
+        },
+        "newValue": {
+          "type": "string"
+        }
+      }
+    },
+    "TaskComment": {
+      "required": [
+        "_id",
+        "taskId",
+        "user",
+        "date",
+        "text"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "taskId": {
+          "type": "string"
+        },
+        "user": {
+          "type": "object",
+          "$ref": "#/definitions/User"
+        },
+        "date": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "Team": {
+      "required": [
+        "_id",
+        "name",
+        "manager",
+        "participants"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string"
+        },
+        "manager": {
+          "type": "object",
+          "$ref": "#/definitions/User"
+        },
+        "participants": {
+          "type": "array",
+          "$ref": "#/definitions/User"
+        }
+      }
+    },
+    "TimeSpent": {
+      "required": [
+        "_id",
+        "taskId",
+        "gladname",
+        "minutesSpent",
+        "date"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "taskId": {
+          "type": "string"
+        },
+        "gladname": {
+          "type": "string"
+        },
+        "minutesSpent": {
+          "type": "number"
+        },
+        "date": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "required": [
+        "_id",
+        "username",
+        "password",
+        "firstName",
+        "lastName",
+        "email",
+        "profileEnum"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "profileEnum": {
+          "type": "string"
+        },
+        "profilePhoto": {
+          "type": "string"
+        },
+        "creationDate": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
