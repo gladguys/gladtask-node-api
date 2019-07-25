@@ -13,6 +13,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 //const DefaultErrorHandlerMiddleware = require('./middlewares/defaultErrorHandlerMiddleware');
 
@@ -32,6 +34,7 @@ app.use('/api/teams', teamRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/invitations', invitationRoutes);
 app.use('/api/emails', emailRoutes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //app.use(DefaultErrorHandlerMiddleware);
 
