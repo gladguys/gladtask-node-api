@@ -1,20 +1,35 @@
-import { OK, NOT_FOUND } from 'http-status-codes';
+import { TeamService } from '../../services/teamService';
+import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
 
-import { Team } from '../../models/team';
+const teamService = new TeamService();
 
 exports.get = async (req, res) => {
-  const teams = await Team.find({});
-  res.status(OK).json(teams);
+  try {
+    const teams = await teamService.findAll();
+    sendDefaultHttpSuccessResponse(res, teams);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 exports.getTeamById = async (req, res) => {
   const teamId = req.params['teamId'];
-  const team = await Team.findById(teamId);
-  res.status(team ? OK : NOT_FOUND).json(team);
+
+  try {
+    const team = await teamService.findById(teamId);
+    sendDefaultHttpSuccessResponse(res, team);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 exports.getUserTeams = async (req, res) => {
   const userId = req.params['userId'];
-  const teamsOfUser = await Team.find({ participants: userId });
-  res.status(OK).json(teamsOfUser);
+
+  try {
+    const teamsOfUser = await teamService.findByQuery({ participants: userId });
+    sendDefaultHttpSuccessResponse(res, teamsOfUser);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };

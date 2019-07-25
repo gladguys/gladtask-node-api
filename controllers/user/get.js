@@ -1,42 +1,73 @@
-import { OK, NOT_FOUND, NO_CONTENT } from 'http-status-codes';
+import { UserService } from '../../services/userService';
+import { TeamService } from '../../services/teamService';
+import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
 
-import { User } from '../../models/user';
-import { Team } from '../../models/team';
+const userService = new UserService();
+const teamService = new TeamService();
 
 exports.get = async (req, res) => {
-  const users = await User.find({});
-  res.status(OK).json(users);
+  try {
+    const users = await userService.findAll();
+    sendDefaultHttpSuccessResponse(res, users);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 exports.getUserById = async (req, res) => {
   const userId = req.params['userId'];
-  const user = await User.findById(userId);
-  res.status(user ? OK : NOT_FOUND).json(user);
+
+  try {
+    const users = await userService.findById(userId);
+    sendDefaultHttpSuccessResponse(res, users);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 exports.getUsersByTeam = async (req, res) => {
   const teamId = req.params['teamId'];
-  const team = await Team.findById(teamId);
-  res.status(team.participants ? OK : NOT_FOUND).json(team.participants);
+
+  try {
+    const team = await teamService.findById(teamId);
+    sendDefaultHttpSuccessResponse(res, team.participants);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 exports.getUserByUsername = async (req, res) => {
   const username = req.params['username'];
-  const user = await User.findOne({ username });
-  res.status(user ? OK : NOT_FOUND).json(user);
+
+  try {
+    const user = await userService.findOneByQuery({ username });
+    sendDefaultHttpSuccessResponse(res, user);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 exports.getUserByEmail = async (req, res) => {
   const email = req.params['email'];
-  const user = await User.findOne({ email });
-  res.status(user ? OK : NOT_FOUND).json(user);
+
+  try {
+    const user = await userService.findOneByQuery({ email });
+    sendDefaultHttpSuccessResponse(res, user);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 exports.getUsersByFirstOrLastName = async (req, res) => {
   const term = req.params['term'];
-  const usersFound = await User.find( { $or: [
-      { firstName: { $regex : term, $options : 'i' } },
-      { lastName: { $regex : term, $options : 'i' } }
-    ] } );
-  res.status(usersFound ? OK : NO_CONTENT).json(usersFound);
+
+  try {
+    const usersFound = await userService.findByQuery({ $or: [
+        { firstName: { $regex : term, $options : 'i' } },
+        { lastName: { $regex : term, $options : 'i' } }
+      ] });
+    sendDefaultHttpSuccessResponse(res, usersFound);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };

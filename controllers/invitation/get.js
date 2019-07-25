@@ -1,14 +1,24 @@
-import { OK } from 'http-status-codes';
+import { InvitationService } from '../../services/invitationService';
+import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
 
-import { Invitation } from '../../models/invitation';
+const invitationService = new InvitationService();
 
 export const get = async (req, res) => {
-  const invitations = await Invitation.find({});
-  res.status(OK).json(invitations);
+  try {
+    const invitations = await invitationService.findAll();
+    sendDefaultHttpSuccessResponse(res, invitations);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 export const getInvitationsByUser = async (req, res) => {
   const userId = req.params['userId'];
-  const userInvitations = await Invitation.find({ receiver: userId });
-  res.status(OK).json(userInvitations);
+
+  try {
+    const userInvitations = await invitationService.findByQuery({ receiver: userId });
+    sendDefaultHttpSuccessResponse(res, userInvitations);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };

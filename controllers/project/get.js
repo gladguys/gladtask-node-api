@@ -1,32 +1,48 @@
-import { OK, NOT_FOUND, NO_CONTENT } from 'http-status-codes';
+import { ProjectService } from '../../services/projectService';
+import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
 
-import { Project } from '../../models/project';
+const projectService = new ProjectService();
 
 export const getById = async (req, res) => {
   const projectId = req.params['projectId'];
-  const project = await Project.findById(projectId);
 
-  if (project) {
-    res.status(OK).json(project);
-  } else {
-    res.status(NOT_FOUND);
+  try {
+    const project = await projectService.findById(projectId);
+    sendDefaultHttpSuccessResponse(res, project);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
   }
 };
 
 export const getProjectsByUser = async (req, res) => {
   const userId = req.params['userId'];
-  const userProjects = await Project.find({ participants: userId });
-  res.status(OK).json(userProjects);
+
+  try {
+    const userProjects = await projectService.findByQuery({ participants: userId });
+    sendDefaultHttpSuccessResponse(res, userProjects);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 export const getProjectsByTeam = async (req, res) => {
   const teamId = req.params['teamId'];
-  const teamProjects = await Project.find({ team: teamId });
-  res.status(OK).json(teamProjects);
+
+  try {
+    const teamProjects = await projectService.findByQuery({ team: teamId });
+    sendDefaultHttpSuccessResponse(res, teamProjects);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 export const getProjectsByName = async (req, res) => {
   const term = req.params['term'];
-  const projectsFound = await Project.find( { name : { $regex : term, $options : 'i' } } );
-  res.status(projectsFound ? OK : NO_CONTENT).json(projectsFound);
+
+  try {
+    const projectsFound = await projectService.findByQuery({ name : { $regex : term, $options : 'i' } });
+    sendDefaultHttpSuccessResponse(res, projectsFound);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };

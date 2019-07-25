@@ -1,67 +1,85 @@
-import { OK, NO_CONTENT } from "http-status-codes";
+import { TaskService } from '../../services/taskService';
+import { sendDefaultHttpErrorResponse, sendDefaultHttpSuccessResponse } from '../../httpUtils';
 
-import { Task } from "../../models/task";
-import { TaskComment } from "../../models/taskComment";
-import { TimeSpent } from "../../models/timeSpent";
-import { TaskChange } from "../../models/taskChange";
-
-const moment = require('moment');
+const taskService = new TaskService();
 
 export const getTaskById = async (req, res) => {
   const taskId = req.params['taskId'];
-  const taskFound = await Task.findById(taskId);
-  taskFound.taskComments = await TaskComment.find({ taskId: taskId });
-  taskFound.timeSpentValues = await TimeSpent.find({ taskId: taskId });
-  taskFound.taskChanges = await TaskChange.find({ taskId: taskId });
-  res.status(OK).json(taskFound);
+
+  try {
+    const taskFound = await taskService.getTaskById(taskId);
+    sendDefaultHttpSuccessResponse(res, taskFound);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 export const getTasksByUser = async (req, res) => {
   const userId = req.params['userId'];
-  const tasksFound = await Task.find({ targetUser: userId });
-  res.status(OK).json(tasksFound);
+
+  try {
+    const taskFound = await taskService.findByQuery({ targetUser: userId });
+    sendDefaultHttpSuccessResponse(res, taskFound);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 export const getTasksByProject = async (req, res) => {
   const projectId = req.params['projectId'];
-  const tasksFound = await Task.find({ project: projectId });
-  res.status(OK).json(tasksFound);
+
+  try {
+    const taskFound = await taskService.findByQuery({ project: projectId });
+    sendDefaultHttpSuccessResponse(res, taskFound);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 export const getUserTasksDueWithinDays = async (req, res) => {
-  const days = req.params['days'];
   const userId = req.params['userId'];
+  const days = req.params['days'];
 
-  const date = new Date();
-  const today = moment(date).toISOString();
-  const futureDate = moment(date).add(days, 'days').toISOString();
-
-  const tasksFound = await Task.find({
-    targetUser: userId,
-    dueDate : { $gte: today, $lt:  futureDate }
-  });
-  res.status(OK).json(tasksFound);
+  try {
+    const tasksFound = await taskService.getUserTasksDueWithinDays(userId, days);
+    sendDefaultHttpSuccessResponse(res, tasksFound);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 export const getSimilarTasksByTitle = async (req, res) => {
   const title = req.params['title'];
-  const tasksFound = await Task.find( { title : { $regex : title, $options : 'i' } } );
-  res.status(OK).json(tasksFound);
+
+  try {
+    const tasksFound = await taskService.findByQuery({ title : { $regex : title, $options : 'i' } });
+    sendDefaultHttpSuccessResponse(res, tasksFound);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 export const getTasksByTitleOrDescription = async (req, res) => {
   const term = req.params['term'];
-  const tasksFound = await Task.find( { $or: [
-      { title: { $regex : term, $options : 'i' } },
-      { description: { $regex : term, $options : 'i' } }
-    ] } );
-  res.status(tasksFound ? OK : NO_CONTENT).json(tasksFound);
+
+  try {
+    const tasksFound = await taskService.findByQuery({ $or: [
+        { title: { $regex : term, $options : 'i' } },
+        { description: { $regex : term, $options : 'i' } }
+      ] });
+    sendDefaultHttpSuccessResponse(res, tasksFound);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };
 
 export const getLast4UserEditedTasks = async (req, res) => {
   const userId = req.params['userId'];
-  const tasksFound = await Task.find({ targetUser: userId })
-    .sort({ 'lastEdited': -1 })
-    .limit(4);
-  res.status(OK).json(tasksFound);
+
+  try {
+    const tasksFound = await taskService.getLast4UserEditedTasks(userId);
+    sendDefaultHttpSuccessResponse(res, tasksFound);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };

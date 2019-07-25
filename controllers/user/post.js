@@ -18,7 +18,7 @@ exports.post = async (req, res) => {
     if (teamId) {
       const existingTeam = await Team.findById(teamId);
       existingTeam.participants.push(savedUser._id);
-      await existingTeam.findOneAndUpdate({ _id: teamId }, { $set:{ participants: existingTeam.participants } } );
+      await existingTeam.findOneAndUpdate({ _id: teamId }, { $set:{ participants: existingTeam.participants } });
     } else {
       const team = new Team({ teamId });
       team.name = 'Meu time';

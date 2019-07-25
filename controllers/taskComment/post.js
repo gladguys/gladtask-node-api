@@ -1,11 +1,17 @@
-import { CREATED } from 'http-status-codes';
-
 import { TaskComment } from '../../models/taskComment';
+import { TaskCommentService } from '../../services/taskCommentService';
+import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
+
+const taskCommentService = new TaskCommentService();
 
 exports.saveTaskComment = async (req, res) => {
   const taskId = req.params['taskId'];
   const taskComment = new TaskComment(req.body);
-  taskComment.taskId = taskId;
-  const commentSaved = await taskComment.save();
-  res.status(CREATED).send(commentSaved);
+
+  try {
+    const taskCommentSaved = await taskCommentService.saveTaskComment(taskComment, taskId);
+    sendDefaultHttpCreatedResponse(res, taskCommentSaved);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(res, error);
+  }
 };

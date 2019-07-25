@@ -1,8 +1,8 @@
-import { OK, UNAUTHORIZED } from 'http-status-codes';
 import { compare } from 'bcrypt';
 
-import { createToken } from '../../jwtHelper';
 import { User } from '../../models/user';
+import { sendDefaultHttpSuccessResponse, sendDefaultHttpUnauthorizedResponse } from '../../httpUtils';
+import { createToken } from '../../jwtHelper';
 
 export const post = async (req, res) => {
   const usernameOrEmail = req.body['usernameOrEmail'];
@@ -13,15 +13,15 @@ export const post = async (req, res) => {
     compare(password, userFound['password'], (err, matchedPassword) => {
       if (matchedPassword) {
         userFound['password'] = null;
-        res.status(OK).json({
+        sendDefaultHttpSuccessResponse(res, {
           user: userFound,
           token: createToken(userFound['_id'], userFound['username'])
         });
       } else {
-        res.status(UNAUTHORIZED).json({ message: 'Either the username or password are not correct' });
+        sendDefaultHttpUnauthorizedResponse(res, 'Either the username or password are not correct');
       }
     });
   } else {
-    res.status(UNAUTHORIZED).json({ message: 'Either the username or password are not correct' });
+    sendDefaultHttpUnauthorizedResponse(res, 'Either the username or password are not correct');
   }
 };
