@@ -12,13 +12,13 @@ const taskSchema = mongoose.Schema({
 	title: { type: String },
 	status: {
 		type: String,
-		enum : ['CRIADA', 'EM ESPERA', 'EM_ANDAMENTO', 'CONCLUIDA'],
+		enum: ['CRIADA', 'EM ESPERA', 'EM_ANDAMENTO', 'CONCLUIDA'],
 		default: 'CRIADA'
 	},
 	project: { type: ObjectId, ref: 'Project', autopopulate: true },
 	priority: {
 		type: String,
-		enum : ['Baixa', 'Normal', 'Alta'],
+		enum: ['Baixa', 'Normal', 'Alta'],
 		default: 'Normal'
 	},
 	image: { type: String },
@@ -31,7 +31,7 @@ const taskSchema = mongoose.Schema({
 	description: { type: String },
 	taskType: {
 		type: String,
-		enum : ['Documentação', 'Feature', 'Bug', 'Melhoria', 'Teste', 'Alinhamento', 'Reunião', 'Outro'],
+		enum: ['Documentação', 'Feature', 'Bug', 'Melhoria', 'Teste', 'Alinhamento', 'Reunião', 'Outro'],
 		default: 'Outro'
 	},
 	estimatedTime: { type: String },
