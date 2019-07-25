@@ -5,7 +5,6 @@ import {
   sendDefaultHttpUnauthorizedResponse
 } from '../../utils/httpUtils';
 
-
 const authService = new AuthService();
 
 export const post = async (req, res) => {

@@ -1,8 +1,10 @@
 export const config = {
-	url_connection: 'mongodb+srv://rodrigobastosv:661iBoUSzuUuuLbY@gladcluster-duyrd.mongodb.net/test?retryWrites=true&w=majority',
-	jwt_secret: 'worldisfullofdevelopers',
-	jwt_expiresIn: '24h',
-	bcrypt_saltRounds: 10,
-	glad_email: 'actaflutter@gmail.com',
-	glad_email_password: 'acta1234'
+	nodeEnv: process.env.NODE_ENV,
+	port: process.env.PORT,
+	dbUrl: process.env.DB_URL,
+	jwtSecret: process.env.JWT_SECRET,
+	jwtExpiresIn: process.env.JWT_EXPIRES_IN,
+	bcryptSaltRounds: process.env.BCRYPT_SALT_ROUNDS,
+	gladEmail: process.env.GLAD_EMAIL,
+	gladEmailPassword: process.env.GLAD_EMAIL_PASSWORD,
 };

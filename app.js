@@ -17,7 +17,7 @@ const cors = require('cors');
 //const DefaultErrorHandlerMiddleware = require('./middlewares/defaultErrorHandlerMiddleware');
 
 const app = express();
-mongoose.connect(config.url_connection, { useNewUrlParser: true, useCreateIndex: true }).then();
+mongoose.connect(config.dbUrl, { useNewUrlParser: true, useCreateIndex: true }).then();
 
 app.use(cors());
 app.use(bodyParser.json());

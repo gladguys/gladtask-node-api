@@ -5,7 +5,7 @@ export class EmailService {
 
 	async sendEmail(recipients, subject, text) {
 		const message = {
-			from: config.glad_email,
+			from: config.gladEmail,
 			to: recipients,
 			subject,
 			text
@@ -15,7 +15,7 @@ export class EmailService {
 
 	async sendEmailWithHtml(recipients, subject, html) {
 		const message = {
-			from: config.glad_email,
+			from: config.gladEmail,
 			to: recipients,
 			subject,
 			html
@@ -25,7 +25,7 @@ export class EmailService {
 
 	async sendGladInviteEmail(recipient, url) {
 		const message = {
-			from: config.glad_email,
+			from: config.gladEmail,
 			to: recipient,
 			subject: 'Invite to join glad',
 			text: url
