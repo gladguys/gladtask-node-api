@@ -1,6 +1,6 @@
 import { UserService } from '../../services/userService';
 import { TeamService } from '../../services/teamService';
-import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
+import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
 
 const userService = new UserService();
 const teamService = new TeamService();

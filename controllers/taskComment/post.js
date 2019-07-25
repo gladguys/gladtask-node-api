@@ -1,6 +1,6 @@
 import { TaskComment } from '../../models/taskComment';
 import { TaskCommentService } from '../../services/taskCommentService';
-import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
+import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
 
 const taskCommentService = new TaskCommentService();
 

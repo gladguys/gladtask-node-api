@@ -1,5 +1,5 @@
 import { TaskService } from '../../services/taskService';
-import { sendDefaultHttpErrorResponse, sendDefaultHttpSuccessResponse } from '../../httpUtils';
+import { sendDefaultHttpErrorResponse, sendDefaultHttpSuccessResponse } from '../../utils/httpUtils';
 
 const taskService = new TaskService();
 

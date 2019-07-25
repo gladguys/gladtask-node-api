@@ -1,7 +1,7 @@
 import { Team } from '../../models/team';
 import { TeamService } from '../../services/teamService';
-import { getUserIdFromToken } from '../../jwtHelper';
-import { sendDefaultHttpErrorResponse, sendDefaultHttpCreatedResponse } from '../../httpUtils';
+import { getUserIdFromToken } from '../../utils/jwtUtils';
+import { sendDefaultHttpErrorResponse, sendDefaultHttpCreatedResponse } from '../../utils/httpUtils';
 
 const teamService = new TeamService();
 

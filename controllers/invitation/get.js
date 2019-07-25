@@ -1,5 +1,5 @@
 import { InvitationService } from '../../services/invitationService';
-import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
+import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
 
 const invitationService = new InvitationService();
 

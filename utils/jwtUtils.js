@@ -1,6 +1,6 @@
 import { verify, sign } from 'jsonwebtoken';
 
-import { config } from './config';
+import { config } from '../config';
 
 export const checkToken = (req, res, next) => {
 	let token = req.headers['x-access-token'] || req.headers['authorization'];

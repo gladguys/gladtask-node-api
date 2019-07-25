@@ -1,5 +1,5 @@
 import { TeamService } from '../../services/teamService';
-import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
+import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
 
 const teamService = new TeamService();
 

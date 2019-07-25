@@ -1,6 +1,6 @@
 import { TaskChange } from '../../models/taskChange';
 import { TaskChangeService } from '../../services/taskChangeService';
-import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
+import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
 
 const taskChangeService = new TaskChangeService();
 

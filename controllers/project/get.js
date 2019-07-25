@@ -1,5 +1,5 @@
 import { ProjectService } from '../../services/projectService';
-import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
+import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
 
 const projectService = new ProjectService();
 

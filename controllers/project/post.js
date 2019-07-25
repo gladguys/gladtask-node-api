@@ -1,7 +1,7 @@
 import { Project } from '../../models/project';
 import { ProjectService } from '../../services/projectService';
-import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
-import { getUserIdFromToken } from '../../jwtHelper';
+import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
+import { getUserIdFromToken } from '../../utils/jwtUtils';
 
 const projectService = new ProjectService();
 

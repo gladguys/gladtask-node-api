@@ -1,6 +1,6 @@
 import { TimeSpent } from '../../models/timeSpent';
 import { TimeSpentService } from '../../services/timeSpentService';
-import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
+import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
 
 const timeSpentService = new TimeSpentService();
 

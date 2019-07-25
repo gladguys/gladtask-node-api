@@ -1,7 +1,7 @@
 import { Task } from "../../models/task";
 import { TaskService } from '../../services/taskService';
-import { getUserIdFromToken } from "../../jwtHelper";
-import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
+import { getUserIdFromToken } from "../../utils/jwtUtils";
+import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
 
 const taskService = new TaskService();
 

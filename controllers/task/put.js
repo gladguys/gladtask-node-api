@@ -1,6 +1,6 @@
 import { Task } from "../../models/task";
 import { TaskService } from '../../services/taskService';
-import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../httpUtils';
+import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
 
 const taskService = new TaskService();
 

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { checkToken } from '../jwtHelper';
+import { checkToken } from '../utils/jwtUtils';
 import * as InvitationController from '../controllers/invitation';
 
 const invitationRoutes = express.Router();

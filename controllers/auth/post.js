@@ -1,8 +1,8 @@
 import { compare } from 'bcrypt';
 
 import { User } from '../../models/user';
-import { sendDefaultHttpSuccessResponse, sendDefaultHttpUnauthorizedResponse } from '../../httpUtils';
-import { createToken } from '../../jwtHelper';
+import { sendDefaultHttpSuccessResponse, sendDefaultHttpUnauthorizedResponse } from '../../utils/httpUtils';
+import { createToken } from '../../utils/jwtUtils';
 
 export const post = async (req, res) => {
   const usernameOrEmail = req.body['usernameOrEmail'];
