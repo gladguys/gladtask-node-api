@@ -28,7 +28,7 @@
         "tags": [
           "Auth"
         ],
-        "description": "Authenticate a user. Validates login and password and send back a token",
+        "summary": "Authenticate a user. Validates login and password and send back a token",
         "parameters": [
           {
             "name": "User Info",
@@ -102,80 +102,2097 @@
         }
       }
     },
+    "/emails/inviteTeam/{email}": {
+      "post": {
+        "tags": [
+          "Email"
+        ],
+        "summary": "Sends an invitation to a user to join a specific team",
+        "parameters": [
+          {
+            "name": "url",
+            "in": "body",
+            "description": "Url generated to give the user direct access to glad",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "description": "Email that will be the recipient of the message",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Email is sent"
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invitations": {
+      "get": {
+        "tags": [
+          "Invitation"
+        ],
+        "summary": "Gets all invitations",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets all invitations",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Invitations"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invitations/user-receiver/{userId}": {
+      "get": {
+        "tags": [
+          "Invitation"
+        ],
+        "summary": "Gets all invitations of the user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the user",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets all invitations",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Invitation"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}": {
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "summary": "Retrieve the project by its id",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the project",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the project",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Project"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/user/{userId}": {
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "summary": "Retrieve the project of a user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the user",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the projects of the user",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Project"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/team/{teamId}": {
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "summary": "Retrieve the projects of a team",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the team",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the projects of the team",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Project"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/term/{term}": {
+      "get": {
+        "tags": [
+          "Project"
+        ],
+        "summary": "Retrieve the projects that name matches the term",
+        "parameters": [
+          {
+            "name": "term",
+            "in": "path",
+            "required": true,
+            "description": "Term to match",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the projects of the team",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Project"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects": {
+      "post": {
+        "tags": [
+          "Project"
+        ],
+        "summary": "Create a project",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": true,
+            "description": "Token of the user",
+            "type": "string"
+          },
+          {
+            "name": "project",
+            "in": "body",
+            "required": true,
+            "description": "Project to create",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Project"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Creates the projects",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Project"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Retrieves all the teams",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets all the teams",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Team"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Creates a team",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "path",
+            "required": true,
+            "description": "Token of the user",
+            "type": "string"
+          },
+          {
+            "name": "team",
+            "in": "body",
+            "required": true,
+            "description": "Team to create",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Team"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Creates the team",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Team"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/{teamId}": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Retrieves a team by its id",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the team",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the team",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Team"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teams/user/{userId}": {
+      "get": {
+        "tags": [
+          "Team"
+        ],
+        "summary": "Retrieves the teams of the user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the user",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the team",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Team"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/users": {
       "get": {
         "tags": [
-          "Users"
+          "User"
         ],
-        "summary": "Get all users in system",
+        "summary": "Retrieves all the users",
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Gets all the users",
             "schema": {
-              "$ref": "#/definitions/Users"
+              "type": "array",
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Creates a user",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "required": true,
+            "description": "User to create",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/User"
+            }
+          },
+          {
+            "name": "teamId",
+            "in": "body",
+            "required": true,
+            "description": "Id of the team",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the users of the team",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
       }
     },
     "/users/{userId}": {
-      "parameters": [
-        {
-          "name": "userId",
-          "in": "path",
-          "required": true,
-          "description": "ID of user that we want to find",
-          "type": "string"
-        }
-      ],
       "get": {
         "tags": [
-          "Users"
+          "User"
         ],
-        "summary": "Get user with given ID",
+        "summary": "Retrieves a user by its id",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the user",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
-            "description": "User is found",
+            "description": "Gets the user",
             "schema": {
+              "type": "object",
               "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
-      },
-      "delete": {
-        "summary": "Delete user with given ID",
+      }
+    },
+    "/users/team/{teamId}": {
+      "get": {
         "tags": [
-          "Users"
+          "User"
+        ],
+        "summary": "Retrieves the users of a team",
+        "parameters": [
+          {
+            "name": "teamId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the team",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
         ],
         "responses": {
           "200": {
-            "description": "User is deleted",
+            "description": "Gets the users of the team",
             "schema": {
+              "type": "object",
               "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/username/{username}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Retrieves the user that has the username",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "required": true,
+            "description": "Username of the team",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the users of the team",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/User"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/email/{email}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Retrieves the user that has the email",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "description": "Email of the team",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the users of the team",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/User"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/term/{term}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Retrieves the user that matches the term",
+        "parameters": [
+          {
+            "name": "term",
+            "in": "path",
+            "required": true,
+            "description": "Term to look for users",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the users of the team",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{taskId}": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Retrieves the task by its id",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the task",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the task",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/user-target/{userId}": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Retrieves the tasks of the target user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the user",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the tasks of the user",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/project/{projectId}": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Retrieves the tasks of the project",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the project",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the tasks of the project",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/between/:days/:userId": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Retrieves the tasks of the user that are between the given range of days",
+        "parameters": [
+          {
+            "name": "days",
+            "in": "path",
+            "required": true,
+            "description": "Number of days",
+            "type": "number"
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the user",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the tasks of the user within the days",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/similar/title/{title}": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Retrieves the tasks that have similar titles as the param",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "path",
+            "required": true,
+            "description": "Term title",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the tasks that have similar title as the param",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/term/{term}": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Retrieves the tasks that have similar titles or descriptions as the param",
+        "parameters": [
+          {
+            "name": "term",
+            "in": "path",
+            "required": true,
+            "description": "Term to match",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the tasks that have similar titles or descriptions as the param",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/last-edited/{userId}": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Retrieves the last 4 edited tasks of the user",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the user",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets the last 4 edited tasks of the user",
+            "schema": {
+              "type": "array",
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Creates a task",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "path",
+            "required": true,
+            "description": "Token of the user",
+            "type": "string"
+          },
+          {
+            "name": "task",
+            "in": "body",
+            "required": true,
+            "description": "Task to create",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Task"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Creates a task",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
       },
       "put": {
-        "summary": "Update user with give ID",
         "tags": [
-          "Users"
+          "Task"
         ],
+        "summary": "Updates a task",
         "parameters": [
           {
-            "name": "user",
+            "name": "task",
             "in": "body",
-            "description": "User with new values of properties",
+            "required": true,
+            "description": "Task to update",
             "schema": {
-              "$ref": "#/definitions/User"
+              "type": "object",
+              "$ref": "#/definitions/Task"
             }
           }
         ],
+        "produces": [
+          "application/json"
+        ],
         "responses": {
           "200": {
-            "description": "User is updated",
+            "description": "Updates a task",
             "schema": {
-              "$ref": "#/definitions/User"
+              "type": "object",
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{taskId}/save-comment": {
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Save a comment of a task",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the task",
+            "type": "string"
+          },
+          {
+            "name": "taskComment",
+            "in": "body",
+            "required": true,
+            "description": "Comment of the task",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/TaskComment"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Creates a task comment",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/TaskComment"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{taskId}/save-time-spent": {
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Save a time spent of a task",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the task",
+            "type": "string"
+          },
+          {
+            "name": "timeSpent",
+            "in": "body",
+            "required": true,
+            "description": "TimeSpent of the task",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/TimeSpent"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Creates a task time spent",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/TimeSpent"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{taskId}/save-task-change": {
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Save a task change of a task",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the task",
+            "type": "string"
+          },
+          {
+            "name": "taskChange",
+            "in": "body",
+            "required": true,
+            "description": "TaskChange of the task",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/TaskChange"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "Creates a task change",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/TaskChange"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{taskId}/update-status/:newStatus": {
+      "put": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Update the status of a task",
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the task",
+            "type": "string"
+          },
+          {
+            "name": "newStatus",
+            "in": "path",
+            "required": true,
+            "description": "New status of the task",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Updates the task status",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "400": {
+            "description": "Auth token is not supplied",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token is not valid or expired",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "number"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
