@@ -11,6 +11,6 @@ export const post = async (req, res) => {
 		await emailService.sendGladInviteEmail(recipient, url);
 		sendDefaultHttpSuccessResponse(res);
 	} catch (error) {
-		sendDefaultHttpErrorResponse(res, error);
+		sendDefaultHttpErrorResponse(req, res, error);
 	}
 };

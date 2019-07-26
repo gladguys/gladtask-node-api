@@ -20,6 +20,6 @@ export const post = async (req, res) => {
       sendDefaultHttpUnauthorizedResponse(res, authentication);
     }
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

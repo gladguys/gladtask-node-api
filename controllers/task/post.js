@@ -13,6 +13,6 @@ export const post = async (req, res) => {
     const savedTask = await taskService.saveTask(task, creatorUserId);
     sendDefaultHttpCreatedResponse(res, savedTask);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

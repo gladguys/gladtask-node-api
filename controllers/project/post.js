@@ -13,6 +13,6 @@ export const post = async (req, res) => {
     const projectSaved = projectService.saveProject(project, creatorUserId);
     sendDefaultHttpCreatedResponse(res, { project: projectSaved });
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

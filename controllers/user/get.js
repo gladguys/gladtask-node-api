@@ -10,7 +10,7 @@ exports.get = async (req, res) => {
     const users = await userService.findAll();
     sendDefaultHttpSuccessResponse(res, users);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -21,7 +21,7 @@ exports.getUserById = async (req, res) => {
     const users = await userService.findById(userId);
     sendDefaultHttpSuccessResponse(res, users);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -32,7 +32,7 @@ exports.getUsersByTeam = async (req, res) => {
     const team = await teamService.findById(teamId);
     sendDefaultHttpSuccessResponse(res, team.participants);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -43,7 +43,7 @@ exports.getUserByUsername = async (req, res) => {
     const user = await userService.findOneByQuery({ username });
     sendDefaultHttpSuccessResponse(res, user);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -54,7 +54,7 @@ exports.getUserByEmail = async (req, res) => {
     const user = await userService.findOneByQuery({ email });
     sendDefaultHttpSuccessResponse(res, user);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -68,6 +68,6 @@ exports.getUsersByFirstOrLastName = async (req, res) => {
       ] });
     sendDefaultHttpSuccessResponse(res, usersFound);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

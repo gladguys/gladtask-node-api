@@ -12,6 +12,6 @@ exports.saveTimeSpent = async (req, res) => {
     const timeSpentSaved = await timeSpentService.saveTimeSpent(timeSpent, taskId);
     sendDefaultHttpCreatedResponse(res, timeSpentSaved);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

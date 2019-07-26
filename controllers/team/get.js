@@ -8,7 +8,7 @@ exports.get = async (req, res) => {
     const teams = await teamService.findAll();
     sendDefaultHttpSuccessResponse(res, teams);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -19,7 +19,7 @@ exports.getTeamById = async (req, res) => {
     const team = await teamService.findById(teamId);
     sendDefaultHttpSuccessResponse(res, team);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -30,6 +30,6 @@ exports.getUserTeams = async (req, res) => {
     const teamsOfUser = await teamService.findByQuery({ participants: userId });
     sendDefaultHttpSuccessResponse(res, teamsOfUser);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

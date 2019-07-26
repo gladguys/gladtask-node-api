@@ -8,7 +8,7 @@ export const get = async (req, res) => {
     const invitations = await invitationService.findAll();
     sendDefaultHttpSuccessResponse(res, invitations);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -19,6 +19,6 @@ export const getInvitationsByUser = async (req, res) => {
     const userInvitations = await invitationService.findByQuery({ receiver: userId });
     sendDefaultHttpSuccessResponse(res, userInvitations);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
