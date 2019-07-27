@@ -11,6 +11,6 @@ exports.post = async (req, res) => {
     const savedUser = await userService.saveUser(userFromRequest, teamId);
     sendDefaultHttpCreatedResponse(res, { user: savedUser });
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

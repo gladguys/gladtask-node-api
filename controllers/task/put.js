@@ -11,7 +11,7 @@ export const put = async (req, res) => {
     await taskService.update(task);
     sendDefaultHttpSuccessResponse(res, { task: task });
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -23,6 +23,6 @@ export const updateTaskStatus = async (req, res) => {
     const updatedTask = await taskService.updateTaskStatus(taskId, newStatus);
     sendDefaultHttpSuccessResponse(res, updatedTask);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

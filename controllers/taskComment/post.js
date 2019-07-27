@@ -12,6 +12,6 @@ exports.saveTaskComment = async (req, res) => {
     const taskCommentSaved = await taskCommentService.saveTaskComment(taskComment, taskId);
     sendDefaultHttpCreatedResponse(res, taskCommentSaved);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

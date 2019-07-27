@@ -12,6 +12,6 @@ export const saveTaskChange = async (req, res) => {
     const taskChangeSaved = await taskChangeService.saveTaskChange(taskChange, taskId);
     sendDefaultHttpCreatedResponse(res, taskChangeSaved);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

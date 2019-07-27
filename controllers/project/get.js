@@ -10,7 +10,7 @@ export const getById = async (req, res) => {
     const project = await projectService.findById(projectId);
     sendDefaultHttpSuccessResponse(res, project);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -21,7 +21,7 @@ export const getProjectsByUser = async (req, res) => {
     const userProjects = await projectService.findByQuery({ participants: userId });
     sendDefaultHttpSuccessResponse(res, userProjects);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -32,7 +32,7 @@ export const getProjectsByTeam = async (req, res) => {
     const teamProjects = await projectService.findByQuery({ team: teamId });
     sendDefaultHttpSuccessResponse(res, teamProjects);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -43,6 +43,6 @@ export const getProjectsByName = async (req, res) => {
     const projectsFound = await projectService.findByQuery({ name : { $regex : term, $options : 'i' } });
     sendDefaultHttpSuccessResponse(res, projectsFound);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

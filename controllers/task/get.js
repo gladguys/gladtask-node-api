@@ -10,7 +10,7 @@ export const getTaskById = async (req, res) => {
     const taskFound = await taskService.getTaskById(taskId);
     sendDefaultHttpSuccessResponse(res, taskFound);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -21,7 +21,7 @@ export const getTasksByUser = async (req, res) => {
     const taskFound = await taskService.findByQuery({ targetUser: userId });
     sendDefaultHttpSuccessResponse(res, taskFound);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -32,7 +32,7 @@ export const getTasksByProject = async (req, res) => {
     const taskFound = await taskService.findByQuery({ project: projectId });
     sendDefaultHttpSuccessResponse(res, taskFound);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -44,7 +44,7 @@ export const getUserTasksDueWithinDays = async (req, res) => {
     const tasksFound = await taskService.getUserTasksDueWithinDays(userId, days);
     sendDefaultHttpSuccessResponse(res, tasksFound);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -55,7 +55,7 @@ export const getSimilarTasksByTitle = async (req, res) => {
     const tasksFound = await taskService.findByQuery({ title : { $regex : title, $options : 'i' } });
     sendDefaultHttpSuccessResponse(res, tasksFound);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -69,7 +69,7 @@ export const getTasksByTitleOrDescription = async (req, res) => {
       ] });
     sendDefaultHttpSuccessResponse(res, tasksFound);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
 
@@ -80,6 +80,6 @@ export const getLast4UserEditedTasks = async (req, res) => {
     const tasksFound = await taskService.getLast4UserEditedTasks(userId);
     sendDefaultHttpSuccessResponse(res, tasksFound);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };

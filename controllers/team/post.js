@@ -13,6 +13,6 @@ exports.post = async (req, res) => {
     const teamSaved = await teamService.saveTeam(team, creatorUserId);
     sendDefaultHttpCreatedResponse(res, teamSaved);
   } catch (error) {
-    sendDefaultHttpErrorResponse(res, error);
+    sendDefaultHttpErrorResponse(req, res, error);
   }
 };
