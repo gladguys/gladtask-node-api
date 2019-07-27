@@ -1,10 +1,11 @@
-const jwt = require('jsonwebtoken');
-const config = require('./config.js');
+import { verify, sign } from 'jsonwebtoken';
 
-let checkToken = (req, res, next) => {
+import { config } from '../config';
+
+export const checkToken = (req, res, next) => {
 	let token = req.headers['x-access-token'] || req.headers['authorization'];
 	if (token) {
-		jwt.verify(token, config.jwt_secret, (err, decoded) => {
+		verify(token, config.jwt_secret, (err, decoded) => {
 			if (err) {
 				return res.status(401).json({
 					success: false,
@@ -23,14 +24,15 @@ let checkToken = (req, res, next) => {
 	}
 };
 
-let createToken = (username) => {
-	return jwt.sign({username: username},
+export const createToken = (id, username) => {
+	return sign(
+		{id, username},
 		config.jwt_secret,
 		{expiresIn: config.jwt_expiresIn}
 	);
 };
 
-module.exports = {
-	checkToken: checkToken,
-	createToken: createToken
+export const getUserIdFromToken = (token) => {
+	const decoded = verify(token, config.jwt_secret);
+	return decoded.id;
 };

@@ -1,7 +1,9 @@
-let router = require('express').Router();
+import express from 'express';
 
-const AuthController = require('../controllers/authController');
+import * as AuthController from '../controllers/auth';
 
-router.post('/', AuthController.post);
+const authRoutes = express.Router();
 
-module.exports = router;
+authRoutes.post('/', AuthController.POST.post);
+
+export default authRoutes;

@@ -1,9 +1,15 @@
-const router = require('express').Router();
+import express from 'express';
 
-const checkToken = require('../jwtHelper').checkToken;
-const ProjectController = require('../controllers/projectController');
+import { checkToken } from "../utils/jwtUtils";
+import * as ProjectController from '../controllers/project';
 
-router.get('/', checkToken, ProjectController.get);
-router.get('/user/:userId', checkToken, ProjectController.getProjectsByUser);
+const projectRoutes = express.Router();
 
-module.exports = router;
+projectRoutes.get('/:projectId', checkToken, ProjectController.GET.getById);
+projectRoutes.get('/user/:userId', checkToken, ProjectController.GET.getProjectsByUser);
+projectRoutes.get('/team/:teamId', checkToken, ProjectController.GET.getProjectsByTeam);
+projectRoutes.get('/term/:term', checkToken, ProjectController.GET.getProjectsByName);
+
+projectRoutes.post('/', checkToken, ProjectController.POST.post);
+
+export default projectRoutes;

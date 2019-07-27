@@ -1,27 +1,37 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+import { config } from "./config";
+import { headerMiddleware } from './middlewares/headersMiddleware';
 
+import authRoutes from './routes/authRoutes';
+import taskRoutes from './routes/taskRoutes';
+import userRoutes from './routes/userRoutes';
+import teamRoutes from './routes/teamRoutes';
+import projectRoutes from './routes/projectRoutes';
+import invitationRoutes from './routes/invitationRoutes';
+import emailRoutes from './routes/emailRoutes';
+
+const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const HeadersMiddleware = require('./middlewares/headersMiddleware');
 //const DefaultErrorHandlerMiddleware = require('./middlewares/defaultErrorHandlerMiddleware');
-const config = require('./config');
 
 const app = express();
-mongoose.connect(config.url_connection, { useNewUrlParser: true }).then();
+mongoose.connect(config.url_connection, { useNewUrlParser: true, useCreateIndex: true }).then();
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(HeadersMiddleware);
+app.use(headerMiddleware);
 
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
-app.use('/api/teams', require('./routes/teamRoutes'));
-app.use('/api/projects', require('./routes/projectRoutes'));
-app.use('/api/invitations', require('./routes/invitationRoutes'));
+app.use('/api/auth', authRoutes);
+app.use('/api/tasks', taskRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/teams', teamRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/invitations', invitationRoutes);
+app.use('/api/emails', emailRoutes);
 
 //app.use(DefaultErrorHandlerMiddleware);
 

@@ -1,13 +1,17 @@
-const router = require('express').Router();
+import express from 'express';
 
-const checkToken = require('../jwtHelper').checkToken;
-const UserController = require('../controllers/userController');
+import { checkToken } from "../utils/jwtUtils";
+import * as UserController from '../controllers/user';
 
-router.get('/', checkToken, UserController.get);
-router.get('/:userId', checkToken, UserController.getUserById);
-router.get('/username/:username', UserController.getUserByUsername);
-router.get('/email/:email', UserController.getUserByEmail);
+const userRoutes = express.Router();
 
-router.post('/', UserController.post);
+userRoutes.get('/', checkToken, UserController.GET.get);
+userRoutes.get('/:userId', checkToken, UserController.GET.getUserById);
+userRoutes.get('/team/:teamId', checkToken, UserController.GET.getUsersByTeam);
+userRoutes.get('/username/:username', UserController.GET.getUserByUsername);
+userRoutes.get('/email/:email', UserController.GET.getUserByEmail);
+userRoutes.get('/term/:term', checkToken, UserController.GET.getUsersByFirstOrLastName);
 
-module.exports = router;
+userRoutes.post('/', UserController.POST.post);
+
+export default userRoutes;

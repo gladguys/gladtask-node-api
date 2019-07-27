@@ -1,9 +1,11 @@
-const router = require('express').Router();
+import express from 'express';
 
-const checkToken = require('../jwtHelper').checkToken;
-const InvitationController = require('../controllers/invitationController');
+import { checkToken } from '../utils/jwtUtils';
+import * as InvitationController from '../controllers/invitation';
 
-router.get('/', checkToken, InvitationController.get);
-router.get('/user-receiver/:userId', checkToken, InvitationController.getInvitationsByUser);
+const invitationRoutes = express.Router();
 
-module.exports = router;
+invitationRoutes.get('/', checkToken, InvitationController.GET.get);
+invitationRoutes.get('/user-receiver/:userId', checkToken, InvitationController.GET.getInvitationsByUser);
+
+export default invitationRoutes;
