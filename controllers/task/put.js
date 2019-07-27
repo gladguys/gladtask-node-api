@@ -1,6 +1,6 @@
 import { Task } from "../../models/task";
 import { TaskService } from '../../services/taskService';
-import { sendDefaultHttpCreatedResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
+import { sendDefaultHttpSuccessResponse, sendDefaultHttpErrorResponse } from '../../utils/httpUtils';
 
 const taskService = new TaskService();
 
@@ -9,7 +9,7 @@ export const put = async (req, res) => {
 
   try {
     await taskService.update(task);
-    sendDefaultHttpCreatedResponse(res, { task: task });
+    sendDefaultHttpSuccessResponse(res, { task: task });
   } catch (error) {
     sendDefaultHttpErrorResponse(res, error);
   }
@@ -21,7 +21,7 @@ export const updateTaskStatus = async (req, res) => {
 
   try {
     const updatedTask = await taskService.updateTaskStatus(taskId, newStatus);
-    sendDefaultHttpCreatedResponse(res, updatedTask);
+    sendDefaultHttpSuccessResponse(res, updatedTask);
   } catch (error) {
     sendDefaultHttpErrorResponse(res, error);
   }

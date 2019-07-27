@@ -20,13 +20,13 @@ export class AuthService {
 				};
 			} else {
 				return {
-					authenticated: true,
+					authenticated: false,
 					message: 'Either the username or password are not correct'
 				};
 			}
 		} else {
 			return {
-				authenticated: true,
+				authenticated: false,
 				message: 'Either the username or password are not correct'
 			};
 		}
