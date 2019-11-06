@@ -41,6 +41,7 @@ exports.getUserByUsername = async (req, res) => {
 
   try {
     const user = await userService.findOneByQuery({ username });
+    console.log("passou");
     sendDefaultHttpSuccessResponse(res, user);
   } catch (error) {
     sendDefaultHttpErrorResponse(req, res, error);
