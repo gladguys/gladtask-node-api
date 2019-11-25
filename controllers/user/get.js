@@ -41,7 +41,6 @@ exports.getUserByUsername = async (req, res) => {
 
   try {
     const user = await userService.findOneByQuery({ username });
-    console.log("passou");
     sendDefaultHttpSuccessResponse(res, user);
   } catch (error) {
     sendDefaultHttpErrorResponse(req, res, error);
@@ -66,6 +65,21 @@ exports.getUsersByFirstOrLastName = async (req, res) => {
     const usersFound = await userService.findByQuery({ $or: [
         { firstName: { $regex : term, $options : 'i' } },
         { lastName: { $regex : term, $options : 'i' } }
+      ] });
+    sendDefaultHttpSuccessResponse(res, usersFound);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(req, res, error);
+  }
+};
+
+exports.getUsersByAnyTerm = async (req, res) => {
+  const term = req.params['term'];
+
+  try {
+    const usersFound = await userService.findByQuery({ $or: [
+        { firstName: { $regex : term, $options : 'i' } },
+        { lastName: { $regex : term, $options : 'i' } },
+        { username: { $regex : term, $options : 'i' } }
       ] });
     sendDefaultHttpSuccessResponse(res, usersFound);
   } catch (error) {

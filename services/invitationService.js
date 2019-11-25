@@ -6,4 +6,8 @@ export class InvitationService extends BaseService {
 	constructor() {
 		super(Invitation);
 	}
+
+	async saveInvitation(invitation) {
+		return await invitation.save();
+	}
 }
