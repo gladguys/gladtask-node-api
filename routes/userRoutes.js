@@ -11,6 +11,7 @@ userRoutes.get('/team/:teamId', checkToken, UserController.GET.getUsersByTeam);
 userRoutes.get('/username/:username', UserController.GET.getUserByUsername);
 userRoutes.get('/email/:email', UserController.GET.getUserByEmail);
 userRoutes.get('/term/:term', checkToken, UserController.GET.getUsersByFirstOrLastName);
+userRoutes.get('/any/:term', checkToken, UserController.GET.getUsersByAnyTerm);
 
 userRoutes.post('/', UserController.POST.post);
 

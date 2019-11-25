@@ -71,3 +71,18 @@ exports.getUsersByFirstOrLastName = async (req, res) => {
     sendDefaultHttpErrorResponse(req, res, error);
   }
 };
+
+exports.getUsersByAnyTerm = async (req, res) => {
+  const term = req.params['term'];
+
+  try {
+    const usersFound = await userService.findByQuery({ $or: [
+        { firstName: { $regex : term, $options : 'i' } },
+        { lastName: { $regex : term, $options : 'i' } },
+        { username: { $regex : term, $options : 'i' } }
+      ] });
+    sendDefaultHttpSuccessResponse(res, usersFound);
+  } catch (error) {
+    sendDefaultHttpErrorResponse(req, res, error);
+  }
+};
