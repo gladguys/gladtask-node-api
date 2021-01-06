@@ -12,7 +12,7 @@ const taskSchema = mongoose.Schema({
 	title: { type: String },
 	status: {
 		type: String,
-		enum: ['CRIADA', 'EM ESPERA', 'EM_ANDAMENTO', 'CONCLUIDA'],
+		enum: ['CRIADA', 'EM_ESPERA', 'EM_ANDAMENTO', 'CONCLUIDA'],
 		default: 'CRIADA'
 	},
 	project: { type: ObjectId, ref: 'Project', autopopulate: true },
