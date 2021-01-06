@@ -6,10 +6,8 @@ const invitationService = new InvitationService();
 
 export const post = async (req,res) => {
     try {
-        console.log(req.body);
         const invitation = new Invitation(req.body);
         const invitationSaved = invitationService.saveInvitation(invitation);
-        console.log("after saving: " + req);
         sendDefaultHttpCreatedResponse(res, { invitation: invitationSaved });
 
     } catch (error) {

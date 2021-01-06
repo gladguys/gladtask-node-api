@@ -7,7 +7,6 @@ const invitationService = new InvitationService();
 export const deleting = async (req, res) => {
   try {
     const invitationId = req.params['invitationId'];
-    console.log(invitationId);
     const invitation = new Invitation();
     invitation._id = invitationId;
     
