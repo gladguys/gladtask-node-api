@@ -9,6 +9,7 @@ export class ProjectService extends BaseService {
 
 	async saveProject(project, creatorUserId) {
 		project.participants = [creatorUserId];
-		return await project.save();
+		const projectCreated = await project.save();
+		return projectCreated;
 	};
 }
