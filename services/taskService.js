@@ -32,6 +32,7 @@ export class TaskService extends BaseService {
 		return await Task.find({
 			targetUser: userId,
 			dueDate : { $lt:  futureDate },
+			status: { $nin: ['CONCLUIDA'] }
 		});
 	}
 
