@@ -27,12 +27,11 @@ export class TaskService extends BaseService {
 
 	async getUserTasksDueWithinDays(userId, days) {
 		const date = new Date();
-		const today = moment(date).toISOString();
 		const futureDate = moment(date).add(days, 'days').toISOString();
 
 		return await Task.find({
 			targetUser: userId,
-			dueDate : { $gte: today, $lt:  futureDate }
+			dueDate : { $lt:  futureDate },
 		});
 	}
 
