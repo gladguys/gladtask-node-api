@@ -10,8 +10,8 @@ export const post = async (req, res) => {
   const project = new Project(req.body);
 
   try {
-    const projectSaved = projectService.saveProject(project, creatorUserId);
-    sendDefaultHttpCreatedResponse(res, { project: projectSaved });
+    const projectSaved = await projectService.saveProject(project, creatorUserId);
+    sendDefaultHttpCreatedResponse(res, projectSaved );
   } catch (error) {
     sendDefaultHttpErrorResponse(req, res, error);
   }
