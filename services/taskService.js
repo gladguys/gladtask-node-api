@@ -1,4 +1,4 @@
-import { Task } from '../models/task';
+import { Task, TaskStatus } from '../models/task';
 import { BaseService } from './baseService';
 import { TaskCommentService } from './taskCommentService';
 import { TimeSpentService } from './timeSpentService';
@@ -32,7 +32,7 @@ export class TaskService extends BaseService {
 		return await Task.find({
 			targetUser: userId,
 			dueDate : { $lt:  futureDate },
-			status: { $nin: ['CONCLUIDA'] }
+			status: { $nin: [TaskStatus.CONCLUIDA] }
 		});
 	}
 
