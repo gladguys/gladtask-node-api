@@ -1,17 +1,17 @@
-import * as mongoose from "mongoose";
+import * as mongoose from 'mongoose';
 
-import { User } from "./user";
-import { TaskChange } from "./taskChange";
-import { TaskComment } from "./taskComment";
-import { TimeSpent } from "./timeSpent";
+import { User } from './user';
+import { TaskChange } from './taskChange';
+import { TaskComment } from './taskComment';
+import { TimeSpent } from './timeSpent';
 
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 export const TaskStatus = Object.freeze({
-  CRIADA: "CRIADA",
-  EM_ANDAMENTO: "EM_ANDAMENTO",
-  EM_ESPERA: "EM_ESPERA",
-  CONCLUIDA: "CONCLUIDA",
+  CRIADA: 'CRIADA',
+  EM_ANDAMENTO: 'EM_ANDAMENTO',
+  EM_ESPERA: 'EM_ESPERA',
+  CONCLUIDA: 'CONCLUIDA',
 });
 
 const taskSchema = mongoose.Schema({
@@ -27,11 +27,11 @@ const taskSchema = mongoose.Schema({
     ],
     default: TaskStatus.CRIADA,
   },
-  project: { type: ObjectId, ref: "Project", autopopulate: true },
+  project: { type: ObjectId, ref: 'Project', autopopulate: true },
   priority: {
     type: String,
-    enum: ["Baixa", "Normal", "Alta"],
-    default: "Normal",
+    enum: ['Baixa', 'Normal', 'Alta'],
+    default: 'Normal',
   },
   image: { type: String },
   dueDate: { type: Date },
@@ -44,22 +44,22 @@ const taskSchema = mongoose.Schema({
   taskType: {
     type: String,
     enum: [
-      "Documentação",
-      "Feature",
-      "Bug",
-      "Melhoria",
-      "Teste",
-      "Alinhamento",
-      "Reunião",
-      "Outro",
+      'Documentação',
+      'Feature',
+      'Bug',
+      'Melhoria',
+      'Teste',
+      'Alinhamento',
+      'Reunião',
+      'Outro',
     ],
-    default: "Outro",
+    default: 'Outro',
   },
   estimatedTime: { type: String },
   taskChanges: [{ type: TaskChange.schema }],
   taskComments: [{ type: TaskComment.schema }],
   timeSpentValues: [{ type: TimeSpent.schema }],
 });
-taskSchema.plugin(require("mongoose-autopopulate"));
+taskSchema.plugin(require('mongoose-autopopulate'));
 
-export const Task = mongoose.model("Task", taskSchema);
+export const Task = mongoose.model('Task', taskSchema);
